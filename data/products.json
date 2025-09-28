@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "BYKR Basic Kit",
+    "slug": "bykr-basic",
+    "description": "Basic device pack",
+    "price_cents": 49900,
+    "currency": "INR",
+    "image": "/images/product1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "BYKR Pro Kit",
+    "slug": "bykr-pro",
+    "description": "Pro device pack",
+    "price_cents": 79900,
+    "currency": "INR",
+    "image": "/images/product2.jpg"
+  }
+]

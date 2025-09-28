@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "company": "Honda",
+    "name": "CBR 650R",
+    "image": "/images/honda_cbr.jpg"
+  },
+  {
+    "id": 2,
+    "company": "Yamaha",
+    "name": "R15",
+    "image": "/images/yamaha_r15.jpg"
+  },
+  {
+    "id": 3,
+    "company": "KTM",
+    "name": "Duke 390",
+    "image": "/images/ktm_duke.jpg"
+  }
+]
