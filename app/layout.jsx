@@ -1,5 +1,6 @@
 import './globals.css'
 import NavBar from '../components/NavBar'
+import Script from 'next/script'
 
 export const metadata = {
   title: 'Bykr - Ride Smart',
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <NavBar />
         {children}
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
       </body>
     </html>
   )
