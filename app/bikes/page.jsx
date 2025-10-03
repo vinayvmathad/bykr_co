@@ -1,5 +1,5 @@
-
 'use client'
+
 import { useState } from 'react'
 import bikes from '../../data/bikes.json'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -9,48 +9,59 @@ export default function BikesPage() {
   const companies = Array.from(new Set(bikes.map(b => b.company)))
   const [selectedCompany, setSelectedCompany] = useState('')
 
-  const filteredBikes = selectedCompany ? bikes.filter(b => b.company === selectedCompany) : bikes
+  const filteredBikes = selectedCompany
+    ? bikes.filter(b => b.company === selectedCompany)
+    : bikes
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-center">Compatible Bikes</h1>
-        <div className="flex flex-col md:flex-row items-center gap-4 mb-8 justify-center">
-          <label className="font-semibold">Select Bike Company:</label>
-          <select
-            value={selectedCompany}
-            onChange={e => setSelectedCompany(e.target.value)}
-            className="px-4 py-2 rounded border border-gray-300 bg-white text-black"
-          >
-            <option value="">All Companies</option>
-            {companies.map(c => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredBikes.map(bike => (
-            <div key={bike.id} className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-              <div className="w-full h-44 bg-white flex items-center justify-center rounded mb-3">
-                {bike.images && bike.images.length > 0 ? (
-                  <Swiper spaceBetween={10} slidesPerView={1} className="w-full h-44 rounded-lg">
-                    {bike.images.map((img, idx) => (
-                      <SwiperSlide key={idx}>
-                        <img src={img} alt={bike.name + ' image ' + (idx+1)} className="max-h-full max-w-full object-contain p-2 w-full h-44" />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                ) : (
-                  <img src={bike.image} alt={bike.name} className="max-h-full max-w-full object-contain p-2" />
-                )}
-              </div>
-              <h3 className="mt-1 font-semibold text-center">{bike.name}</h3>
-              <p className="text-sm text-gray-700 text-center mb-2">{bike.company}</p>
-              <div className="mt-auto text-lg font-bold">₹14,999</div>
-            </div>
+    <main className="bg-gray-100 min-h-screen py-8">
+      <h1 className="text-3xl font-bold text-center mb-6">Compatible Bikes</h1>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <label className="font-semibold">Select Bike Company:</label>
+        <select
+          className="border rounded px-4 py-2"
+          value={selectedCompany}
+          onChange={e => setSelectedCompany(e.target.value)}
+        >
+          <option value="">All Companies</option>
+          {companies.map(c => (
+            <option key={c} value={c}>{c}</option>
           ))}
-        </div>
+        </select>
       </div>
-    </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4">
+        {filteredBikes.map(bike => (
+          <div key={bike.id} className="bg-white rounded-xl shadow p-4 flex flex-col items-center">
+            <div className="w-full h-44 flex items-center justify-center mb-3">
+              {bike.images && bike.images.length > 0 ? (
+                <Swiper spaceBetween={10} slidesPerView={1}>
+                  {bike.images.map((img, idx) => (
+                    <SwiperSlide key={idx}>
+                      <img
+                        src={img}
+                        alt={bike.name}
+                        className="w-full h-44 object-contain bg-white p-2 rounded"
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              ) : (
+                <div className="w-full h-44 flex items-center justify-center bg-gray-200 rounded">
+                  <span className="text-gray-500">No image available</span>
+                </div>
+              )}
+            </div>
+            <div className="text-lg font-bold text-center">{bike.name}</div>
+            <div className="text-gray-600 text-center">{bike.company}</div>
+            <div className="text-xl font-bold text-center mt-2">₹14,999</div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center mt-8">
+        <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg text-lg transition">
+          See compatible bikes
+        </button>
+      </div>
+    </main>
   )
 }
