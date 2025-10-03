@@ -4,10 +4,10 @@ import CompatibilityDropdown from './CompatibilityDropdown'
 import Image from 'next/image'
 
 export default function NavBar(){
-  const [instagramUrl,setInstagramUrl] = useState('https://instagram.com/')
+  const [instagramUrl,setInstagramUrl] = useState('https://www.instagram.com/bykr_co?igsh=MWZtajIwZTN5aDZyZw==')
   const social = [
     { id: 'insta', label: 'Instagram', url: instagramUrl },
-    { id: 'youtube', label: 'YouTube', url: 'https://youtube.com/' },
+    { id: 'youtube', label: 'YouTube', url: 'https://m.youtube.com/@bykr_co?fbclid=PAT01DUANMGJpleHRuA2FlbQIxMAABpx8vQjsHWjRQ0lGUDveue8PZanhwFtfCmF9eLJGn9rYCzSl0DHt2n95qGGut_aem_g6_SRYu5mzsAMqOIrbtOlw' },
     { id: 'x', label: 'X', url: 'https://x.com/' },
     { id: 'facebook', label: 'Facebook', url: 'https://facebook.com/' },
   ]
