@@ -15,12 +15,12 @@
     "id": 3,
     "company": "KTM",
     "name": "1st Gen ADV 390X - Hold My Throttle",
-    "image": "public/images/ea3263_cb42b04de9e14cccbe2e2efe8718a181~mv2.avif"
+    "image": "/images/ea3263_cb42b04de9e14cccbe2e2efe8718a181~mv2.avif"
   },
   {
     "id": 4,
     "company": "Royal Enfield",
     "name": "RE Guerrilla 450- Hold My Throttle",
-    "image": "public/images/ea3263_b43e09c031c647adaaf1d2def4b8d7bb~mv2.avif"
+    "image": "/images/ea3263_b43e09c031c647adaaf1d2def4b8d7bb~mv2.avif"
   }
 ]
