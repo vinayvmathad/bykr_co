@@ -3,7 +3,9 @@
     "id": 1,
     "company": "Royal Enfield",
     "name": "Himalayan 450 - Hold My Throttle",
-    "image": "/images/ea3263_509f295b316e4f6589747c150b55c9c7~mv2.avif"
+    "image":[ "/images/ea3263_509f295b316e4f6589747c150b55c9c7~mv2.avif",
+             "/images/450x_pov.avif"
+  ]
   },
   {
     "id": 2,
@@ -15,7 +17,10 @@
     "id": 3,
     "company": "KTM",
     "name": "1st Gen ADV 390X - Hold My Throttle",
-    "image": "/images/ea3263_cb42b04de9e14cccbe2e2efe8718a181~mv2.avif"
+    "image": [
+      "/images/ea3263_cb42b04de9e14cccbe2e2efe8718a181~mv2.avif",
+      "/images/390x_pov.avif"
+    ]
   },
   {
     "id": 4,

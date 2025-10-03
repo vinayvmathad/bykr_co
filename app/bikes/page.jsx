@@ -1,6 +1,9 @@
+
 'use client'
 import { useState } from 'react'
 import bikes from '../../data/bikes.json'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
 
 export default function BikesPage() {
   const companies = Array.from(new Set(bikes.map(b => b.company)))
@@ -29,7 +32,17 @@ export default function BikesPage() {
           {filteredBikes.map(bike => (
             <div key={bike.id} className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
               <div className="w-full h-44 bg-white flex items-center justify-center rounded mb-3">
-                <img src={bike.image} alt={bike.name} className="max-h-full max-w-full object-contain p-2" />
+                {bike.images && bike.images.length > 0 ? (
+                  <Swiper spaceBetween={10} slidesPerView={1} className="w-full h-44 rounded-lg">
+                    {bike.images.map((img, idx) => (
+                      <SwiperSlide key={idx}>
+                        <img src={img} alt={bike.name + ' image ' + (idx+1)} className="max-h-full max-w-full object-contain p-2 w-full h-44" />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                ) : (
+                  <img src={bike.image} alt={bike.name} className="max-h-full max-w-full object-contain p-2" />
+                )}
               </div>
               <h3 className="mt-1 font-semibold text-center">{bike.name}</h3>
               <p className="text-sm text-gray-700 text-center mb-2">{bike.company}</p>
