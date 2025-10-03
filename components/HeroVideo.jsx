@@ -21,9 +21,13 @@ export default function HeroVideo(){
       </section>
       <ProductInfo />
       <div className="flex justify-center py-8">
-        <a href="/bikes" className="px-6 py-3 bg-white text-black rounded-full font-semibold shadow">See compatible bikes</a>
+        <a
+          href="/bikes"
+          className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold rounded-full shadow-lg transition duration-200"
+        >
+          See compatible bikes
+        </a>
       </div>
-
       {/* Embedded YouTube Video */}
       <div className="flex justify-center py-8">
         <iframe
@@ -37,7 +41,6 @@ export default function HeroVideo(){
           className="rounded-lg shadow"
         ></iframe>
       </div>
-
       {/* Product Description Section */}
       <div className="max-w-3xl mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-4">What Is Cruise Control?</h2>

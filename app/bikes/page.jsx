@@ -57,11 +57,6 @@ export default function BikesPage() {
           </div>
         ))}
       </div>
-      <div className="flex justify-center mt-8">
-        <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg text-lg transition">
-          See compatible bikes
-        </button>
-      </div>
     </main>
   )
 }
