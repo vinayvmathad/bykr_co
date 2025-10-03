@@ -1,20 +1,26 @@
 [
   {
     "id": 1,
-    "company": "Honda",
-    "name": "CBR 650R",
-    "image": "/images/honda_cbr.jpg"
+    "company": "Royal Enfield",
+    "name": "Himalayan 450 - Hold My Throttle",
+    "image": "/images/ea3263_509f295b316e4f6589747c150b55c9c7~mv2.avif"
   },
   {
     "id": 2,
-    "company": "Yamaha",
-    "name": "R15",
-    "image": "/images/yamaha_r15.jpg"
+    "company": "KTM",
+    "name": "1st Gen ADV 390 - Hold My Throttle",
+    "image": "/images/ea3263_a7180ec1ac51470284e8d3f19a331cd3~mv2.avif"
   },
   {
     "id": 3,
     "company": "KTM",
-    "name": "Duke 390",
+    "name": "1st Gen ADV 390X - Hold My Throttle",
+    "image": "/images/ktm_duke.jpg"
+  },
+  {
+    "id": 4,
+    "company": "Royal Enfield",
+    "name": "RE Guerrilla 450- Hold My Throttle",
     "image": "/images/ktm_duke.jpg"
   }
 ]

@@ -8,14 +8,7 @@ export default function ProductGrid(){
 
   return (
     <div id="products" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-gray-100 min-h-screen py-8">
-      <div className="col-span-3 flex justify-center mb-8">
-        <button
-          className="px-6 py-3 bg-orange-200 text-black rounded-full font-semibold shadow"
-          onClick={() => setShowBikes(true)}
-        >
-          See compatible bikes
-        </button>
-      </div>
+      {/* ...existing code... */}
       {showBikes
         ? bikes.map(bike => (
             <div key={bike.id} className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
