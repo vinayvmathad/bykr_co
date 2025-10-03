@@ -15,7 +15,7 @@ export default function ProductInfo() {
         </h2>
       </div>
       <div className="flex justify-center items-center">
-        <Image src="/product.png" alt="BYKR Co. Product" width={300} height={300} className="rounded-lg bg-white" />
+        <Image src="/images/modem.avif" alt="BYKR Co. Product" width={300} height={300} className="rounded-lg bg-white" />
       </div>
     </section>
   )
