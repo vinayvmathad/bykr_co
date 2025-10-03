@@ -16,7 +16,7 @@ export default function NavBar(){
   useEffect(()=>{},[])
 
   return (
-    <header className="sticky top-0 z-50 bg-orange-200 border-b border-orange-300">
+  <header className="sticky top-0 z-50 bg-orange-800 border-b border-orange-900">
       <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
         <div className="flex items-center gap-4">
           <a href="/" className="text-2xl font-bold text-black">BYKR</a>
