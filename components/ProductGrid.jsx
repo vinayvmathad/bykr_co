@@ -1,3 +1,4 @@
+'use client'
 import products from '../data/products.json'
 import bikes from '../data/bikes.json'
 import { useState } from 'react'
