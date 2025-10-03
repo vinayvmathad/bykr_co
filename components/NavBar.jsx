@@ -16,13 +16,11 @@ export default function NavBar(){
   useEffect(()=>{},[])
 
   return (
-    <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md border-b border-white/5">
+    <header className="sticky top-0 z-50 bg-orange-200 border-b border-orange-300">
       <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
         <div className="flex items-center gap-4">
-          <div className="text-2xl font-bold">BYKR</div>
-          <CompatibilityDropdown />
+          <a href="/" className="text-2xl font-bold text-black">BYKR</a>
         </div>
-
         <div className="flex items-center gap-3">
           {/* Social media radio-like buttons */}
           <form className="flex gap-2 items-center">
@@ -35,12 +33,11 @@ export default function NavBar(){
                   className="sr-only"
                   onChange={()=>{
                     setSelected(s.id)
-                    // open in new tab
                     window.open(s.url, '_blank')
                   }}
                 />
-                <div className={"w-9 h-9 rounded-full flex items-center justify-center border "+(selected===s.id? 'border-white':'border-white/30')}>
-                  <span className="text-xs">{s.label[0]}</span>
+                <div className={"w-9 h-9 rounded-full flex items-center justify-center border border-black bg-transparent "+(selected===s.id? '':'')}> 
+                  <span className="text-xs font-bold text-black">{s.label[0]}</span>
                 </div>
               </label>
             ))}
