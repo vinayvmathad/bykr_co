@@ -11,7 +11,9 @@ export default function ProductGrid(){
       {/* ...existing code... */}
       {bikes.map(bike => (
         <div key={bike.id} className="bg-white p-4 rounded-lg shadow flex flex-col items-center">
-          <img src={bike.image} alt={bike.name} className="w-full h-44 object-cover rounded mb-3" />
+          <div className="w-full h-44 bg-white flex items-center justify-center rounded mb-3">
+            <img src={bike.image} alt={bike.name} className="max-h-full max-w-full object-contain p-2" />
+          </div>
           <h3 className="mt-1 font-semibold text-center">{bike.name}</h3>
           <p className="text-sm text-gray-700 text-center mb-2">{bike.company}</p>
           <div className="mt-auto text-lg font-bold">₹14,999</div>
