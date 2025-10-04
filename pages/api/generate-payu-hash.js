@@ -27,7 +27,7 @@ export default function handler(req, res) {
 
   // Hash string format: key|txnid|amount|productinfo|firstname|email|||||||||||salt
   const hashString = `${key}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${salt}`
-  const hash = crypto.createHash('sha256').update(hashString).digest('hex')
+  const hash = crypto.createHash('sha512').update(hashString).digest('hex')
 
   res.status(200).json({ hash, key })
 }
