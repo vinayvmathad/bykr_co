@@ -1,44 +1,70 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import bikes from '../../data/bikes.json'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
+function generateTxnId() {
+  return 'txn_' + Math.random().toString(36).substr(2, 9)
+}
+
 export default function BikesPage() {
   const companies = Array.from(new Set(bikes.map(b => b.company)))
   const [selectedCompany, setSelectedCompany] = useState('')
+  const formRef = useRef(null)
 
   const filteredBikes = selectedCompany
     ? bikes.filter(b => b.company === selectedCompany)
     : bikes
 
-  // Razorpay payment handler
-  function handlePayment(bike) {
-    const options = {
-      key: "YOUR_RAZORPAY_KEY_ID", // Replace with your Razorpay key
-      amount: 1499900, // ₹14,999 in paise
-      currency: "INR",
-      name: "BYKR Co.",
-      description: bike.name,
-      image: "/images/product.png",
-      handler: function (response) {
-        // Send response.razorpay_payment_id to your backend for verification
-        alert("Payment successful! Payment ID: " + response.razorpay_payment_id)
-      },
-      prefill: {
-        name: "",
-        email: "",
-        contact: ""
-      },
-      theme: {
-        color: "#F97316"
-      }
-    }
-    const rzp = new window.Razorpay(options)
-    rzp.open()
+  const [payuForm, setPayuForm] = useState({
+    key: '',
+    txnid: '',
+    amount: '',
+    productinfo: '',
+    firstname: '',
+    email: '',
+    phone: '',
+    surl: '',
+    furl: '',
+    hash: ''
+  })
+
+  async function handleBuyNow(bike) {
+    const txnid = generateTxnId()
+    const amount = '14999'
+    const productinfo = bike.name
+    const firstname = 'Customer Name'
+    const email = 'customer@email.com'
+    const phone = '9999999999'
+    const surl = `${window.location.origin}/payment-success`
+    const furl = `${window.location.origin}/payment-failure`
+
+    const res = await fetch('/api/generate-payu-hash', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ txnid, amount, productinfo, firstname, email })
+    })
+    const data = await res.json()
+
+    setPayuForm({
+      key: data.key,
+      txnid,
+      amount,
+      productinfo,
+      firstname,
+      email,
+      phone,
+      surl,
+      furl,
+      hash: data.hash
+    })
+
+    // Submit the form programmatically
+    formRef.current.submit()
   }
 
   return (
@@ -88,14 +114,33 @@ export default function BikesPage() {
             <div className="text-gray-600 text-center">{bike.company}</div>
             <div className="text-xl font-bold text-center mt-2">₹14,999</div>
             <button
+              type="button"
               className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded mt-4"
-              onClick={() => handlePayment(bike)}
+              onClick={() => handleBuyNow(bike)}
             >
               Buy Now
             </button>
           </div>
         ))}
       </div>
+      {/* Single hidden form for PayU submission */}
+      <form
+        ref={formRef}
+        action="https://secure.payu.in/_payment"
+        method="post"
+        className="hidden"
+      >
+        <input type="hidden" name="key" value={payuForm.key} />
+        <input type="hidden" name="txnid" value={payuForm.txnid} />
+        <input type="hidden" name="amount" value={payuForm.amount} />
+        <input type="hidden" name="productinfo" value={payuForm.productinfo} />
+        <input type="hidden" name="firstname" value={payuForm.firstname} />
+        <input type="hidden" name="email" value={payuForm.email} />
+        <input type="hidden" name="phone" value={payuForm.phone} />
+        <input type="hidden" name="surl" value={payuForm.surl} />
+        <input type="hidden" name="furl" value={payuForm.furl} />
+        <input type="hidden" name="hash" value={payuForm.hash} />
+      </form>
     </main>
   )
 }
