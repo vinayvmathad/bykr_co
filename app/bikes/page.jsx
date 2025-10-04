@@ -14,8 +14,9 @@ function generateTxnId() {
 export default function BikesPage() {
   const companies = Array.from(new Set(bikes.map(b => b.company)))
   const [selectedCompany, setSelectedCompany] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [loadingBikeId, setLoadingBikeId] = useState(null) // Track loading by ID
   const formRef = useRef(null)
+  const submissionInitiated = useRef(false) // Ref to prevent double submission
 
   const filteredBikes = selectedCompany
     ? bikes.filter(b => b.company === selectedCompany)
@@ -37,17 +38,20 @@ export default function BikesPage() {
   // This effect will run when payuForm state is updated with a new hash.
   // It reliably submits the form after the state has been applied.
   useEffect(() => {
-    if (payuForm.hash) {
+    // Only submit if a hash exists and a submission hasn't already been initiated.
+    if (payuForm.hash && !submissionInitiated.current) {
+      submissionInitiated.current = true // Mark as initiated
       formRef.current.submit()
-      // Reset loading state in case the user navigates back
-      setIsLoading(false)
+      // Reset loading state in case the user navigates back.
+      setLoadingBikeId(null)
     }
   }, [payuForm.hash])
 
   async function handleBuyNow(bike) {
-    // Prevent multiple clicks
-    if (isLoading) return
-    setIsLoading(true)
+    // Reset submission flag and prevent multiple clicks
+    submissionInitiated.current = false
+    if (loadingBikeId) return // Prevent new clicks if a payment is already processing
+    setLoadingBikeId(bike.id) // Set loading state for the specific bike
 
     const txnid = generateTxnId()
     const amount = '14999'
@@ -70,7 +74,7 @@ export default function BikesPage() {
     } catch (error) {
       console.error('Payment initiation failed:', error)
       alert(`Error: ${error.message}`)
-      setIsLoading(false) // Reset loading state on failure
+      setLoadingBikeId(null) // Reset loading state on failure
       return
     }
 
@@ -136,11 +140,12 @@ export default function BikesPage() {
             <div className="text-xl font-bold text-center mt-2">₹14,999</div>
             <button
               type="button"
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded mt-4 w-32 disabled:bg-gray-400"
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded mt-4 w-32 disabled:bg-gray-400 disabled:cursor-not-allowed"
               onClick={() => handleBuyNow(bike)}
-              disabled={isLoading}
+              // Disable if any bike is loading to prevent multiple transactions
+              disabled={loadingBikeId !== null}
             >
-              {isLoading ? 'Processing...' : 'Buy Now'}
+              {loadingBikeId === bike.id ? 'Processing...' : 'Buy Now'}
             </button>
           </div>
         ))}
