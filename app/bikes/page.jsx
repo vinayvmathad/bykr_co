@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import bikes from '../../data/bikes.json'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
@@ -14,6 +14,7 @@ function generateTxnId() {
 export default function BikesPage() {
   const companies = Array.from(new Set(bikes.map(b => b.company)))
   const [selectedCompany, setSelectedCompany] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const formRef = useRef(null)
 
   const filteredBikes = selectedCompany
@@ -33,7 +34,21 @@ export default function BikesPage() {
     hash: ''
   })
 
+  // This effect will run when payuForm state is updated with a new hash.
+  // It reliably submits the form after the state has been applied.
+  useEffect(() => {
+    if (payuForm.hash) {
+      formRef.current.submit()
+      // Reset loading state in case the user navigates back
+      setIsLoading(false)
+    }
+  }, [payuForm.hash])
+
   async function handleBuyNow(bike) {
+    // Prevent multiple clicks
+    if (isLoading) return
+    setIsLoading(true)
+
     const txnid = generateTxnId()
     const amount = '14999'
     const productinfo = bike.name
@@ -42,13 +57,22 @@ export default function BikesPage() {
     const phone = '9999999999'
     const surl = `${window.location.origin}/payment-success`
     const furl = `${window.location.origin}/payment-failure`
-
-    const res = await fetch('/api/generate-payu-hash', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ txnid, amount, productinfo, firstname, email })
-    })
-    const data = await res.json()
+    
+    let data;
+    try {
+      const res = await fetch('/api/generate-payu-hash', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ txnid, amount, productinfo, firstname, email })
+      })
+      data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to generate hash.')
+    } catch (error) {
+      console.error('Payment initiation failed:', error)
+      alert(`Error: ${error.message}`)
+      setIsLoading(false) // Reset loading state on failure
+      return
+    }
 
     setPayuForm({
       key: data.key,
@@ -62,9 +86,6 @@ export default function BikesPage() {
       furl,
       hash: data.hash
     })
-
-    // Submit the form programmatically
-    formRef.current.submit()
   }
 
   return (
@@ -115,10 +136,11 @@ export default function BikesPage() {
             <div className="text-xl font-bold text-center mt-2">₹14,999</div>
             <button
               type="button"
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded mt-4"
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded mt-4 w-32 disabled:bg-gray-400"
               onClick={() => handleBuyNow(bike)}
+              disabled={isLoading}
             >
-              Buy Now
+              {isLoading ? 'Processing...' : 'Buy Now'}
             </button>
           </div>
         ))}
